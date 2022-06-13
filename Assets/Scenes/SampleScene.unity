@@ -314,9 +314,9 @@ GameObject:
   - component: {fileID: 409245355}
   - component: {fileID: 409245354}
   - component: {fileID: 409245353}
+  - component: {fileID: 409245350}
   - component: {fileID: 409245352}
   - component: {fileID: 409245351}
-  - component: {fileID: 409245350}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -336,8 +336,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8621e58b9b479f841bddcf60671641cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _move: {fileID: 0}
-  _speed: 10
+  <Speed>k__BackingField: 10
+  _animation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 4.1338716
+      outSlope: 4.1338716
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.21899319
+      value: 0.9052897
+      inSlope: 1.48737
+      outSlope: 1.48737
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.1591316
+      outSlope: -1.1591316
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 0
+    m_PostInfinity: 0
+    m_RotationOrder: 4
+  height: 10
+  Jump_Duration: 4
 --- !u!54 &409245351
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -346,12 +380,12 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409245349}
   serializedVersion: 2
-  m_Mass: 32
+  m_Mass: 1
   m_Drag: 2
   m_AngularDrag: 0.5
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &409245352

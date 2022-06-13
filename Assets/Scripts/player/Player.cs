@@ -1,36 +1,56 @@
+using System;
+using System.Collections;
+using System.Runtime.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PhysicsMovement _move;
-    [SerializeField] private float _speed;
+    [field: SerializeField] private float Speed { get; set; }
+    [SerializeField] private AnimationCurve _animation;
+    [SerializeField] private float height = 5;
+    [SerializeField] private float Jump_Duration = 3;
+    private Transform _transform;
     private Rigidbody _rigidbody;
-    private Jump jump;
-
-    public delegate void EnterInPlaneTrigger();
-
-    public event EnterInPlaneTrigger EnterTrigger;
 
     private void Start()
     {
-        _move = gameObject.AddComponent<PhysicsMovement>();
-        jump = gameObject.GetComponent<Jump>();
+        _transform = gameObject.GetComponent<Transform>();
         _rigidbody = gameObject.GetComponent<Rigidbody>();
     }
 
-    void Update()
+    private void Update()
     {
-         Vector3 targer = new Vector3(0,0,1);
+       RunForward(Vector3.forward, Speed);
+       if (Input.GetKeyDown("space"))
+       {
+           StartCoroutine(Jump(_transform, Jump_Duration));
+       }
+       
+    }
 
-        if (Input.GetKeyDown("space"))
+    private IEnumerator Jump(Transform jumper, float duration)
+    {
+        float expiredSeconds = 0f;
+        float progress = 0f;
+        Vector3 startPosition = jumper.position;
+        
+        while (progress <= 1f)
         {
-            jump.PlayAnimations(_rigidbody, 1f);
+            expiredSeconds += Time.fixedDeltaTime;
+            progress = expiredSeconds / duration;
+
+            float yPos = _animation.Evaluate(progress) * height;
+            
+            jumper.position += new Vector3(0,startPosition.y - transform.position.y + yPos,0);
+            Debug.Log($"Express seconds {expiredSeconds}, Progress {progress}, Ypos {yPos}, Evaluate {_animation.Evaluate(progress)}");
+            yield return null; 
         }
-        _move.Move(targer, _speed);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void RunForward(Vector3 target, float speed)
     {
-        EnterTrigger?.Invoke();
+        transform.position += target * (Time.deltaTime * speed);
     }
+
 }
